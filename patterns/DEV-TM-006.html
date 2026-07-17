@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-006: 継承による目的誤用（コード再利用目的） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-006: 継承による目的誤用（コード再利用目的）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 目的</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 4件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>継承による目的誤用（コード再利用目的）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">目的</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>アルゴリズムの骨格共有ではなく、単純なコード再利用のために Template Method パターン（継承）を使用し、is-a 関係のない（または弱い）クラス間に継承関係を導入する</td></tr>
+        <tr><th>症状と結果</th><td>継承ツリーが深くなる（3層以上）につれてプログラムフローの追跡が困難になる。サブクラスが親クラスの実装に強く依存するため、変更コストが高くなる（fragile inheritance）。Liskov 置換原則に反するサブクラスが出現しやすくなる。</td></tr>
+        <tr><th>解決策</th><td>コンポジション（Strategy パターン等）で同等の機能を実装し直す。Java 8 以降であれば関数オブジェクト（ラムダ）を受け取る static ファクトリや Builder で代替できる。</td></tr>
+        <tr><th>防止策</th><td>Template Method の適用前に「is-a 関係が成立するか」「アルゴリズムの骨格共有が本当に必要か」を確認する。コード再利用が目的なら最初からコンポジションを選択する。</td></tr>
+        <tr><th>逸脱例</th><td>HTTP クライアントとファイル読み込みのコードが共通部分を持つからといって、両者を同一の AbstractResource 継承ツリーに入れる。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-003.html">DEV-TM-003</a>, <a href="./DEV-TM-008.html">DEV-TM-008</a></div></td></tr>
+        <tr><th>備考</th><td>Robert C. Martin（2002）が「継承は過剰使用されやすい」と明言。Effective Java（Bloch）でも Template Method より関数オブジェクト受け取りを推奨。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (4件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-009 (2002)</div>
+            <div class="evidence-snippet">"it was clear that inheritance was very easy to over-use"</div>
+            <div class="evidence-meta"><a href="https://www.sebaslab.com/wp-content/uploads/2022/04/TemplateAndStrategy.pdf" target="_blank">https://www.sebaslab.com/wp-content/uploads/2022/04/TemplateAndStrategy.pdf</a></div>
+            <div class="evidence-meta">Locator: Chapter 14</div>
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-015 (2019)</div>
+            <div class="evidence-snippet">"Template Method pattern is far less attractive"</div>
+            <div class="evidence-meta"><a href="https://softwareengineering.stackexchange.com/questions/391962/is-template-design-pattern-a-bad-practice-due-to-inheritance" target="_blank">https://softwareengineering.stackexchange.com/questions/391962/is-template-design-pattern-a-bad-practice-due-to-inheritance</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-003 (2007)</div>
+            <div class="evidence-snippet">"Difficult to comprehend program flow with deep inheritance chains"</div>
+            <div class="evidence-meta"><a href="https://puredanger.github.io/tech.puredanger.com/2007/07/03/pattern-hate-template/" target="_blank">https://puredanger.github.io/tech.puredanger.com/2007/07/03/pattern-hate-template/</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-023 (2022)</div>
+            <div class="evidence-snippet">"Old papers recommended using classes as a specialization for code reuse"</div>
+            <div class="evidence-meta"><a href="https://levelup.gitconnected.com/code-smell-137-inheritance-tree-too-deep-541590a56bd5" target="_blank">https://levelup.gitconnected.com/code-smell-137-inheritance-tree-too-deep-541590a56bd5</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

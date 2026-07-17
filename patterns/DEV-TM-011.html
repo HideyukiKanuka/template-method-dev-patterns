@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-011: Template Method適用境界の誤認（コンポジションが適切な場面での使用） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-011: Template Method適用境界の誤認（コンポジションが適切な場面での使用）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-a">A: 意図保持の変形（Adaptive Variant）</span>
+            <span class="type-badge">逸脱タイプ: 目的</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 3件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>Template Method適用境界の誤認（コンポジションが適切な場面での使用）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">目的</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-a">A: 意図保持の変形（Adaptive Variant）</span></td></tr>
+        <tr><th>一般形式</th><td>アルゴリズムの変形がコンポジション（Strategy, Decorator, ラムダ等）で十分解決できる場面で、Template Method（継承ベース）を選択する</td></tr>
+        <tr><th>症状と結果</th><td>Template Method の継承によるサブクラスが増加し、組み合わせの爆発が起きる。実行時にアルゴリズムを切り替えたい場合に対応できない（継承は静的）。Effective Java 等でコンポジション優先が推奨される場面での使用。</td></tr>
+        <tr><th>解決策</th><td>Strategy パターン、ラムダ式、Builder、Decorator 等に移行する。特に Java 8 以降では、abstract メソッドを関数型インターフェースへの引数に置き換えられる。</td></tr>
+        <tr><th>防止策</th><td>Template Method 適用時に「実行時に振る舞いを切り替える必要があるか」「is-a 関係か has-a 関係か」を判断する。has-a 関係なら必ずコンポジションを選択する。</td></tr>
+        <tr><th>逸脱例</th><td>ソートアルゴリズムの変更を AbstractSorter サブクラスで対応する設計を採用したが、後から「実行時にアルゴリズムを動的に切り替えたい」という要件が出てきて対応できなくなった。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-006.html">DEV-TM-006</a>, <a href="./DEV-TM-007.html">DEV-TM-007</a></div></td></tr>
+        <tr><th>備考</th><td>A判定（意図保持の変形）：GoFの意図から外れるが、継承よりコンポジションを選ぶ判断はアーキテクチャ上の合理的選択で有害ではない。ただし意図的な代替選択であればパターンの「誤用」ではなく「意図的な非採用」。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (3件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-008 (2018)</div>
+            <div class="evidence-snippet">"Inconsiderate use of this pattern could lead to a big headache"</div>
+            <div class="evidence-meta"><a href="https://dev.to/riccardo_cardin/template-method-pattern-revised-3od3" target="_blank">https://dev.to/riccardo_cardin/template-method-pattern-revised-3od3</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-015 (2019)</div>
+            <div class="evidence-snippet">"Template Method pattern is far less attractive"</div>
+            <div class="evidence-meta"><a href="https://softwareengineering.stackexchange.com/questions/391962/is-template-design-pattern-a-bad-practice-due-to-inheritance" target="_blank">https://softwareengineering.stackexchange.com/questions/391962/is-template-design-pattern-a-bad-practice-due-to-inheritance</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-009 (2002)</div>
+            <div class="evidence-snippet">"it was clear that inheritance was very easy to over-use"</div>
+            <div class="evidence-meta"><a href="https://www.sebaslab.com/wp-content/uploads/2022/04/TemplateAndStrategy.pdf" target="_blank">https://www.sebaslab.com/wp-content/uploads/2022/04/TemplateAndStrategy.pdf</a></div>
+            <div class="evidence-meta">Locator: Chapter 14</div>
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

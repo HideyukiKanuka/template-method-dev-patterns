@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-012: 平行継承階層の誘発（Parallel Hierarchy Proliferation） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-012: 平行継承階層の誘発（Parallel Hierarchy Proliferation）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 目的</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 3件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>平行継承階層の誘発（Parallel Hierarchy Proliferation）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">目的</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>Template Method パターンの継承構造が、ドメイン階層と処理階層の2系統の継承ツリーを同時に維持することを強制し、新しいドメインクラスを追加するたびに必ず対応する処理クラスも追加しなければならなくなる</td></tr>
+        <tr><th>症状と結果</th><td>継承階層が2つ以上平行して存在し、一方を変更すると他方も変更が必要になる。クラス数が急増し、命名規則が `XxxProcessor`, `XxxHandler`, `XxxTemplate` と増殖する。変更の波及範囲が広く、リファクタリングが困難。</td></tr>
+        <tr><th>解決策</th><td>Visitor パターンや Strategy パターンで処理とデータ構造を分離する。または Bridge パターンで抽象と実装の独立した拡張を可能にする。</td></tr>
+        <tr><th>防止策</th><td>Template Method で継承ツリーを設計するとき「将来2軸に分岐する可能性があるか」を評価する。2軸分岐が見えたら Bridge または Visitor パターンへの移行を検討する。</td></tr>
+        <tr><th>逸脱例</th><td>AbstractAnimal / Dog / Cat という動物階層と、AbstractAnimalTrainer / DogTrainer / CatTrainer というトレーナー階層が平行して存在し、Fish を追加するたびに FishTrainer も追加しなければならない。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-006.html">DEV-TM-006</a>, <a href="./DEV-TM-008.html">DEV-TM-008</a></div></td></tr>
+        <tr><th>備考</th><td>「平行継承階層」はRefactoring（Fowler）でも悪いコードスメルとして挙げられる。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (3件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-048 (2024)</div>
+            <div class="evidence-snippet">"Every time you create a domain class you must make a counterpart"</div>
+            <div class="evidence-meta"><a href="https://dev.to/mcsee/code-smell-255-parallel-hierarchies-55og" target="_blank">https://dev.to/mcsee/code-smell-255-parallel-hierarchies-55og</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-003 (2007)</div>
+            <div class="evidence-snippet">"Difficult to compose functionality"</div>
+            <div class="evidence-meta"><a href="https://puredanger.github.io/tech.puredanger.com/2007/07/03/pattern-hate-template/" target="_blank">https://puredanger.github.io/tech.puredanger.com/2007/07/03/pattern-hate-template/</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-004 (2023)</div>
+            <div class="evidence-snippet">"Inflexible hierarchy, tight coupling, fragile inheritance, template bloat"</div>
+            <div class="evidence-meta"><a href="https://www.linkedin.com/advice/3/what-challenges-risks-using-template-method" target="_blank">https://www.linkedin.com/advice/3/what-challenges-risks-using-template-method</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-004: Call Super アンチパターン（フックへの super 強制） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-004: Call Super アンチパターン（フックへの super 強制）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 協調関係</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 4件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>Call Super アンチパターン（フックへの super 強制）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">協調関係</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>ConcreteClass が override したメソッド内で super.method() を呼ぶことをドキュメントや慣習で要求する設計になっており、Template Method の「TemplateMethod が呼ぶ」という制御の流れが逆転している</td></tr>
+        <tr><th>症状と結果</th><td>super.method() の呼び出しを実装者が忘れた場合に動作が不完全になる（言語では強制できない）。Template Method パターンの導入目的（Hollywood Principle の実現）が達成されない。継承ツリーが深くなるほど呼び忘れの連鎖が起きやすくなる。</td></tr>
+        <tr><th>解決策</th><td>Template Method パターンを正しく適用し、TemplateMethod() が共通処理を直接実行し、サブクラス固有の処理は abstract または hook の PrimitiveOperation() に委ねる。サブクラスは super を呼ばずに自分の担当部分だけを実装する。</td></tr>
+        <tr><th>防止策</th><td>「super を呼んでください」というコメントやドキュメントが必要な場合は設計を見直す。NVI（Non-Virtual Interface）パターン（= Template Method）を採用し、公開メソッドは非仮想（final）、仮想メソッドは非公開（protected/private）にする。</td></tr>
+        <tr><th>逸脱例</th><td>AbstractLogger.log() をサブクラスが override する際に super.log() を呼ばなければならない場合。正しくは log() を final にし、doLog() だけをサブクラスに実装させる。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-002.html">DEV-TM-002</a>, <a href="./DEV-TM-001.html">DEV-TM-001</a></div></td></tr>
+        <tr><th>備考</th><td>Martin Fowler が「Call Super」を命名したアンチパターン。Template Method の目的そのものが「Call Super を不要にする」ことにある。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (4件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-005 (2005)</div>
+            <div class="evidence-snippet">"Call Super is an anti-pattern: documentation says subclass must call super"</div>
+            <div class="evidence-meta"><a href="https://martinfowler.com/bliki/CallSuper.html" target="_blank">https://martinfowler.com/bliki/CallSuper.html</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-013 (2006)</div>
+            <div class="evidence-snippet">"Call Super is an anti-pattern because there is no way to force implementers"</div>
+            <div class="evidence-meta"><a href="http://butunclebob.com/ArticleS.DeanWampler.ShouldYouEverOverrideConcreteMethods" target="_blank">http://butunclebob.com/ArticleS.DeanWampler.ShouldYouEverOverrideConcreteMethods</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-014 (2018)</div>
+            <div class="evidence-snippet">"Calling super class method in an overriding method is an anti-pattern"</div>
+            <div class="evidence-meta"><a href="https://softwareengineering.stackexchange.com/questions/363473/how-to-handle-extra-steps-that-are-part-of-concrete-class-generically-in-templat" target="_blank">https://softwareengineering.stackexchange.com/questions/363473/how-to-handle-extra-steps-that-are-part-of-concrete-class-generically-in-templat</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-047 (2014)</div>
+            <div class="evidence-snippet">"Inheritor might forget to call Base::update() and behaviour is incomplete"</div>
+            <div class="evidence-meta"><a href="https://softwareengineering.stackexchange.com/questions/239024/nvi-for-virtual-function-implemented-in-every-layer-of-a-deep-hierarchy" target="_blank">https://softwareengineering.stackexchange.com/questions/239024/nvi-for-virtual-function-implemented-in-every-layer-of-a-deep-hierarchy</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

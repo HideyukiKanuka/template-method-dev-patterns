@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-008: テンプレートメソッドの過剰拡張（template bloat） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-008: テンプレートメソッドの過剰拡張（template bloat）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 構造</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 3件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>テンプレートメソッドの過剰拡張（template bloat）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">構造</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>TemplateMethod() が多数の PrimitiveOperation() を呼ぶように肥大化し、多くのステップがほとんどのサブクラスで不要または空実装になる</td></tr>
+        <tr><th>症状と結果</th><td>サブクラスが大量の空メソッドを実装しなければならない（インターフェース汚染の継承版）。TemplateMethod() の可読性が低下し、どのステップが必須でどれがオプションか不明確になる。LSP 違反：多くの PrimitiveOperation() が特定の ConcreteClass にとって意味を持たない。</td></tr>
+        <tr><th>解決策</th><td>TemplateMethod() のステップを最小化し、本当に共通のステップのみを骨格に含める。各 ConcreteClass が必要とするステップが大きく異なる場合は、Strategy パターンや複数の具体的な AbstractClass への分割を検討する。</td></tr>
+        <tr><th>防止策</th><td>TemplateMethod() の設計時に「全ての ConcreteClass がこのステップを実装する必要があるか」を確認する。不要なサブクラスが過半数を超えるステップは骨格から除外する。</td></tr>
+        <tr><th>逸脱例</th><td>AbstractReport.generate() が 10 ステップを定義しているが、各 ConcreteReport はそのうち 2〜3 ステップしか実際に使わない。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-006.html">DEV-TM-006</a>, <a href="./DEV-TM-009.html">DEV-TM-009</a></div></td></tr>
+        <tr><th>備考</th><td>「template bloat」はLinkedInアドバイス等で複数の文献が指摘する問題。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (3件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-004 (2023)</div>
+            <div class="evidence-snippet">"Inflexible hierarchy, tight coupling, fragile inheritance, template bloat"</div>
+            <div class="evidence-meta"><a href="https://www.linkedin.com/advice/3/what-challenges-risks-using-template-method" target="_blank">https://www.linkedin.com/advice/3/what-challenges-risks-using-template-method</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-010 (2023)</div>
+            <div class="evidence-snippet">"violation of the Liskov substitution principle, and increased complexity"</div>
+            <div class="evidence-meta"><a href="https://www.linkedin.com/advice/0/how-do-you-avoid-inheritance-template-method-pattern" target="_blank">https://www.linkedin.com/advice/0/how-do-you-avoid-inheritance-template-method-pattern</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-032 (2017)</div>
+            <div class="evidence-snippet">"Smells result from violating object oriented software engineering guidelines"</div>
+            <div class="evidence-meta"><a href="https://local.cis.strath.ac.uk/wp/extras/msctheses/papers/strath_cis_publication_2696.pdf" target="_blank">https://local.cis.strath.ac.uk/wp/extras/msctheses/papers/strath_cis_publication_2696.pdf</a></div>
+            <div class="evidence-meta">Locator: Abstract</div>
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

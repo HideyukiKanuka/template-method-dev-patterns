@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-001: テンプレートメソッドの再定義 | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-001: テンプレートメソッドの再定義</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 構造</span>
+            <span class="seed-badge">Seed SEED-TM-001</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 4件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>テンプレートメソッドの再定義</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">構造</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>ConcreteClass が AbstractClass の TemplateMethod() を override（再定義）する</td></tr>
+        <tr><th>症状と結果</th><td>アルゴリズムの骨格（処理の流れ）を固定するという Template Method の意図が破壊される。各 ConcreteClass が独自の骨格を持つことになり、手順が分裂・矛盾する。他の ConcreteClass や呼び出し元が想定する処理順序が保証されなくなる。</td></tr>
+        <tr><th>解決策</th><td>TemplateMethod() の骨格が変更される必要があるなら、変更されるべきステップを PrimitiveOperation（フック）として切り出す。骨格そのものを変える必要があるなら Strategy パターンへの移行を検討する。</td></tr>
+        <tr><th>防止策</th><td>TemplateMethod() を final（Java）または非仮想（C++）として宣言し、サブクラスによる再定義を言語レベルで禁止する。コードレビューで TemplateMethod() の override を検出するルールを設ける。</td></tr>
+        <tr><th>逸脱例</th><td>AbstractClass.processFile() がファイルの「開く→変換→保存」の流れを定義しているとき、ConcreteClass が processFile() を override して「変換→開く→保存」に順序を変える。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-004.html">DEV-TM-004</a>, <a href="./DEV-TM-005.html">DEV-TM-005</a></div></td></tr>
+        <tr><th>備考</th><td>Seed SEED-TM-001 の再現パターン。GoF 定義の核心的違反。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (4件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-001 (2024)</div>
+            <div class="evidence-snippet">"If you don't mark the template method as final, subclasses can override it"</div>
+            <div class="evidence-meta"><a href="https://www.systemoverflow.com/learn/behavioral-patterns/template-method-pattern/template-method-in-interviews-common-questions-and-pitfalls" target="_blank">https://www.systemoverflow.com/learn/behavioral-patterns/template-method-pattern/template-method-in-interviews-common-questions-and-pitfalls</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-007 (2024)</div>
+            <div class="evidence-snippet">"subclasses do not override the template method itself"</div>
+            <div class="evidence-meta"><a href="https://en.wikipedia.org/wiki/Template_method_pattern" target="_blank">https://en.wikipedia.org/wiki/Template_method_pattern</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-031 (2024)</div>
+            <div class="evidence-snippet">"implement all abstract steps, and override some optional ones if needed, but not the template method itself"</div>
+            <div class="evidence-meta"><a href="https://refactoring.guru/design-patterns/template-method" target="_blank">https://refactoring.guru/design-patterns/template-method</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-034 (2025)</div>
+            <div class="evidence-snippet">"template method itself is usually marked as final (non-overridable)"</div>
+            <div class="evidence-meta"><a href="https://maxim-gorin.medium.com/template-method-pattern-define-the-flow-customize-the-steps-027d5c3cfcc6" target="_blank">https://maxim-gorin.medium.com/template-method-pattern-define-the-flow-customize-the-steps-027d5c3cfcc6</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

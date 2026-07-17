@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-005: Fragile Base Class による骨格の崩壊 | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-005: Fragile Base Class による骨格の崩壊</h2>
+        <div class="pattern-meta">
+            <span class="badge label-c">C: 侵食・崩壊（Erosion / Decay）</span>
+            <span class="type-badge">逸脱タイプ: 構造</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 4件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>Fragile Base Class による骨格の崩壊</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">構造</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-c">C: 侵食・崩壊（Erosion / Decay）</span></td></tr>
+        <tr><th>一般形式</th><td>AbstractClass の TemplateMethod() または PrimitiveOperation() の実装を変更したとき、その変更が ConcreteClass の動作を意図せず壊す（Fragile Base Class 問題）</td></tr>
+        <tr><th>症状と結果</th><td>ベースクラスの「安全に見える変更」（メソッドの実装変更・呼び出し順序の変更等）が、サブクラスの override したメソッドと組み合わさって誤動作を引き起こす。例：storeDocument() の変更により、EncryptedStorage のサブクラスが暗号化処理をバイパスする。</td></tr>
+        <tr><th>解決策</th><td>Template Method の PrimitiveOperation() 呼び出し順序や事前条件を変更するときは、全 ConcreteClass への影響を検証する。open/closed principle を守り、変更ではなく拡張でアルゴリズムを変化させる設計にする。</td></tr>
+        <tr><th>防止策</th><td>TemplateMethod() の内部実装を変更する際はリグレッションテストを必ず実行する。継承で使う予定のあるクラスはインターフェースを安定させ、変更不可部分を final にする。Joshua Bloch「継承のために設計・文書化するか、さもなくば禁止せよ」の原則に従う。</td></tr>
+        <tr><th>逸脱例</th><td>Bag クラスの addAll() が add() を n 回呼ぶ実装から一括追加に変更されたとき、CountingBag（add() をカウント付き override）が追加件数を二重計上する。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-001.html">DEV-TM-001</a>, <a href="./DEV-TM-007.html">DEV-TM-007</a></div></td></tr>
+        <tr><th>備考</th><td>C判定根拠：SRC-016（EncryptedStorageが当初機能していたが基底クラスの変更で暗号化が迂回された）、SRC-026（CountingBagが当初機能していたがBagクラス変更で破損）という「当初→劣化」の時系列が明示されている。</td></tr>
+        <tr><th>C判定根拠</th><td><strong>時系列根拠（当初→劣化）が明示されたソースに基づきC判定。LLMレビューパネルで c_evidence_ok=true を確認済み。</strong></td></tr>
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (4件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-016 (2025)</div>
+            <div class="evidence-snippet">"Encryption logic bypassed because base class storeDocument changed"</div>
+            <div class="evidence-meta"><a href="https://pratikpandey.substack.com/p/fragile-base-class-problem-composition" target="_blank">https://pratikpandey.substack.com/p/fragile-base-class-problem-composition</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-026 (2020)</div>
+            <div class="evidence-snippet">"Changes to the base class can possibly break functionalities of its subclasses"</div>
+            <div class="evidence-meta"><a href="https://www.oreilly.com/library/view/hands-on-design-patterns/9781838648817/eab3799d-d723-4674-831f-858586ea3630.xhtml" target="_blank">https://www.oreilly.com/library/view/hands-on-design-patterns/9781838648817/eab3799d-d723-4674-831f-858586ea3630.xhtml</a></div>
+            <div class="evidence-meta">Locator: Chapter: Fragile base class problem</div>
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-017 (2024)</div>
+            <div class="evidence-snippet">"Seemingly safe modifications to a base class cause derived classes to malfunction"</div>
+            <div class="evidence-meta"><a href="https://en.wikipedia.org/wiki/Fragile_base_class_problem" target="_blank">https://en.wikipedia.org/wiki/Fragile_base_class_problem</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-035 (2024)</div>
+            <div class="evidence-snippet">"The fragile base class problem is blamed on open recursion"</div>
+            <div class="evidence-meta"><a href="https://en.wikipedia.org/wiki/Fragile_base_class" target="_blank">https://en.wikipedia.org/wiki/Fragile_base_class</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

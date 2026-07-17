@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-003: コンストラクタ内テンプレートメソッド呼び出し | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-003: コンストラクタ内テンプレートメソッド呼び出し</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 実装</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 4件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>コンストラクタ内テンプレートメソッド呼び出し</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">実装</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>AbstractClass のコンストラクタ内で TemplateMethod() または abstract な PrimitiveOperation() を呼び出し、ConcreteClass のフィールドが未初期化のまま実行される</td></tr>
+        <tr><th>症状と結果</th><td>Java のオブジェクト初期化順序（スーパークラスコンストラクタ → サブクラスフィールド初期化）により、サブクラスのフィールドが初期化される前に PrimitiveOperation() が実行される。結果として null 参照、0 など初期値の誤使用、不正な状態での処理が発生する。</td></tr>
+        <tr><th>解決策</th><td>TemplateMethod() の呼び出しをコンストラクタから分離し、クライアントが明示的に初期化メソッドを呼ぶ形（Two-step initialization）に変更する。または Factory Method / Builder パターンで初期化完了後に処理を開始する。</td></tr>
+        <tr><th>防止策</th><td>Effective Java（Bloch）の指針「コンストラクタは overridable メソッドを呼んではいけない」を徹底する。静的解析ツール（PMD、SpotBugs）で constructor 内の overridable 呼び出しを検出する。</td></tr>
+        <tr><th>逸脱例</th><td>abstract class Vehicle のコンストラクタが calcMileage() を呼ぶ。ConcreteClass Car の fuel フィールドがまだ初期化されていないため calcMileage() が 0 を返す。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-001.html">DEV-TM-001</a></div></td></tr>
+        <tr><th>備考</th><td>Java固有の実装問題だが、他言語でも同様の初期化順序問題は発生する。一般化可能。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (4件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-002 (2024)</div>
+            <div class="evidence-snippet">"Template method calls on an object still under construction"</div>
+            <div class="evidence-meta"><a href="https://pvs-studio.com/en/blog/posts/java/1132/" target="_blank">https://pvs-studio.com/en/blog/posts/java/1132/</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-011 (2011)</div>
+            <div class="evidence-snippet">"mileage is 0 not 6"</div>
+            <div class="evidence-meta"><a href="https://novyden.blogspot.com/2011/08/java-anti-pattern-constructors-and.html" target="_blank">https://novyden.blogspot.com/2011/08/java-anti-pattern-constructors-and.html</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-021 (2025)</div>
+            <div class="evidence-snippet">"constructors should not invoke overridable methods"</div>
+            <div class="evidence-meta"><a href="https://sqlpey.com/java/java-constructor-pitfalls/" target="_blank">https://sqlpey.com/java/java-constructor-pitfalls/</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-027 (2014)</div>
+            <div class="evidence-snippet">"it will not have been initialized and will return null"</div>
+            <div class="evidence-meta"><a href="https://stackoverflow.com/questions/23160790/safe-alternative-to-calling-of-abstract-method-from-constructor" target="_blank">https://stackoverflow.com/questions/23160790/safe-alternative-to-calling-of-abstract-method-from-constructor</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

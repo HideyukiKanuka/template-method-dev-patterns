@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ（採掘日: 2026-02-23）</p>
+</header>
+<main>
+    
+    <div class="stats-bar">
+        <div class="stat-card"><div class="num">12</div><div class="lbl">総パターン数</div></div>
+        <div class="stat-card"><div class="num">1</div><div class="lbl">A（適応的変形）</div></div>
+        <div class="stat-card"><div class="num">10</div><div class="lbl">B（誤適用）</div></div>
+        <div class="stat-card"><div class="num">1</div><div class="lbl">C（侵食・崩壊）</div></div>
+        <div class="stat-card"><div class="num">39</div><div class="lbl">総根拠数</div></div>
+    </div>
+    <div class="filter-bar">
+        <label>ABC判定: <select id="filter-abc" onchange="filterTable()">
+            <option value="">すべて</option>
+            <option value="A">A: 意図保持の変形</option>
+            <option value="B">B: 誤適用</option>
+            <option value="C">C: 侵食・崩壊</option>
+        </select></label>
+        <label>逸脱タイプ: <select id="filter-type" onchange="filterTable()">
+            <option value="">すべて</option>
+            <option value="目的">目的</option>
+            <option value="協調関係">協調関係</option>
+            <option value="構造">構造</option>
+            <option value="実装">実装</option>
+        </select></label>
+        <label>Seed/新規: <select id="filter-seed" onchange="filterTable()">
+            <option value="">すべて</option>
+            <option value="1">Seed のみ</option>
+            <option value="0">新規のみ</option>
+        </select></label>
+    </div>
+    <table class="pattern-table" id="pattern-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>パターン名</th>
+                <th>判定</th>
+                <th>逸脱タイプ</th>
+                <th>根拠数</th>
+                <th>合議</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr data-abc="B" data-type="構造" data-seed="1">
+            <td><a href="./patterns/DEV-TM-001.html"><strong>DEV-TM-001</strong></a></td>
+            <td><a href="./patterns/DEV-TM-001.html">テンプレートメソッドの再定義</a> <span class="seed-badge">Seed</span></td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">構造</span></td>
+            <td>4件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="協調関係" data-seed="1">
+            <td><a href="./patterns/DEV-TM-002.html"><strong>DEV-TM-002</strong></a></td>
+            <td><a href="./patterns/DEV-TM-002.html">フックメソッドの直接呼び出し</a> <span class="seed-badge">Seed</span></td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">協調関係</span></td>
+            <td>2件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="実装" data-seed="0">
+            <td><a href="./patterns/DEV-TM-003.html"><strong>DEV-TM-003</strong></a></td>
+            <td><a href="./patterns/DEV-TM-003.html">コンストラクタ内テンプレートメソッド呼び出し</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">実装</span></td>
+            <td>4件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="協調関係" data-seed="0">
+            <td><a href="./patterns/DEV-TM-004.html"><strong>DEV-TM-004</strong></a></td>
+            <td><a href="./patterns/DEV-TM-004.html">Call Super アンチパターン（フックへの super 強制）</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">協調関係</span></td>
+            <td>4件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="C" data-type="構造" data-seed="0">
+            <td><a href="./patterns/DEV-TM-005.html"><strong>DEV-TM-005</strong></a></td>
+            <td><a href="./patterns/DEV-TM-005.html">Fragile Base Class による骨格の崩壊</a> </td>
+            <td><span class="badge label-c">C</span></td>
+            <td><span class="type-badge">構造</span></td>
+            <td>4件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="目的" data-seed="0">
+            <td><a href="./patterns/DEV-TM-006.html"><strong>DEV-TM-006</strong></a></td>
+            <td><a href="./patterns/DEV-TM-006.html">継承による目的誤用（コード再利用目的）</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">目的</span></td>
+            <td>4件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="協調関係" data-seed="0">
+            <td><a href="./patterns/DEV-TM-007.html"><strong>DEV-TM-007</strong></a></td>
+            <td><a href="./patterns/DEV-TM-007.html">Hollywood Principle 違反（制御の流れの逆転）</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">協調関係</span></td>
+            <td>3件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="構造" data-seed="0">
+            <td><a href="./patterns/DEV-TM-008.html"><strong>DEV-TM-008</strong></a></td>
+            <td><a href="./patterns/DEV-TM-008.html">テンプレートメソッドの過剰拡張（template bloat）</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">構造</span></td>
+            <td>3件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="構造" data-seed="0">
+            <td><a href="./patterns/DEV-TM-009.html"><strong>DEV-TM-009</strong></a></td>
+            <td><a href="./patterns/DEV-TM-009.html">LSP 違反によるテンプレート骨格の無効化</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">構造</span></td>
+            <td>3件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="構造" data-seed="0">
+            <td><a href="./patterns/DEV-TM-010.html"><strong>DEV-TM-010</strong></a></td>
+            <td><a href="./patterns/DEV-TM-010.html">デフォルト実装付きフックの意味破壊</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">構造</span></td>
+            <td>2件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="A" data-type="目的" data-seed="0">
+            <td><a href="./patterns/DEV-TM-011.html"><strong>DEV-TM-011</strong></a></td>
+            <td><a href="./patterns/DEV-TM-011.html">Template Method適用境界の誤認（コンポジションが適切な場面での使用）</a> </td>
+            <td><span class="badge label-a">A</span></td>
+            <td><span class="type-badge">目的</span></td>
+            <td>3件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        <tr data-abc="B" data-type="目的" data-seed="0">
+            <td><a href="./patterns/DEV-TM-012.html"><strong>DEV-TM-012</strong></a></td>
+            <td><a href="./patterns/DEV-TM-012.html">平行継承階層の誘発（Parallel Hierarchy Proliferation）</a> </td>
+            <td><span class="badge label-b">B</span></td>
+            <td><span class="type-badge">目的</span></td>
+            <td>3件</td>
+            <td><span class="badge label-a">agree</span></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | LLMレビューパネル（方式A）による内部妥当性補強済み
+</footer>
+<script>
+function filterTable() {
+    var abc = document.getElementById('filter-abc').value;
+    var type = document.getElementById('filter-type').value;
+    var seed = document.getElementById('filter-seed').value;
+    var rows = document.querySelectorAll('#pattern-table tbody tr');
+    rows.forEach(function(row) {
+        var show = true;
+        if (abc && row.dataset.abc !== abc) show = false;
+        if (type && row.dataset.type !== type) show = false;
+        if (seed && row.dataset.seed !== seed) show = false;
+        row.style.display = show ? '' : 'none';
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-002: フックメソッドの直接呼び出し | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-002: フックメソッドの直接呼び出し</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 協調関係</span>
+            <span class="seed-badge">Seed SEED-TM-002</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 2件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>フックメソッドの直接呼び出し</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">協調関係</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>パターン外部（Client 等）または他のクラスが、TemplateMethod() を経由せず PrimitiveOperation()（フックメソッド）を直接呼び出す</td></tr>
+        <tr><th>症状と結果</th><td>PrimitiveOperation() は TemplateMethod() 内から呼ばれることを前提とした設計になっているため、前後の処理（初期化・後処理・ロック等）が実行されない。フレームワーク側が TemplateMethod() の呼び出し方を変更すると、直接呼び出しをしているクライアントで予期せぬ不具合が発生する。</td></tr>
+        <tr><th>解決策</th><td>PrimitiveOperation() を単独で公開する必要がある場合は、その用途に対応した別のパブリックメソッドを設計するか、アクセス経路を見直す。</td></tr>
+        <tr><th>防止策</th><td>PrimitiveOperation() を protected または package-private にして、TemplateMethod() からのみ到達できるようアクセス制御する。言語の可視性機能で強制できない場合はドキュメントと静的解析で補う。</td></tr>
+        <tr><th>逸脱例</th><td>processFile() が open()→parse()→write() を呼ぶ設計のとき、クライアントが parse() を直接呼び出す（processFile() をバイパスする）。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-001.html">DEV-TM-001</a>, <a href="./DEV-TM-006.html">DEV-TM-006</a></div></td></tr>
+        <tr><th>備考</th><td>Seed SEED-TM-002 の再現パターン。protected でも同一パッケージ内からは直接アクセス可能という Java の言語仕様が問題を助長する。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (2件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-006 (2016)</div>
+            <div class="evidence-snippet">"One is easily able to accidentally call b.doWork() instead of b.work()"</div>
+            <div class="evidence-meta"><a href="https://stackoverflow.com/questions/35529279/protecting-hooks-in-template-pattern" target="_blank">https://stackoverflow.com/questions/35529279/protecting-hooks-in-template-pattern</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-028 (2019)</div>
+            <div class="evidence-snippet">"Client should not call parseFile or writeUpdatedDocument directly"</div>
+            <div class="evidence-meta"><a href="https://javadevcentral.com/template-method-design-pattern/" target="_blank">https://javadevcentral.com/template-method-design-pattern/</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>

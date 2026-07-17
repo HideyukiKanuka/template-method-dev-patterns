@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-TM-007: Hollywood Principle 違反（制御の流れの逆転） | Template Method 逸脱パターンカタログ</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header>
+    <h1>Template Method 逸脱パターンカタログ</h1>
+    <p>GoF Template Method パターンからの逸脱を系統的に収集・分類したカタログ</p>
+</header>
+<main>
+    <a class="back-link" href="../index.html">&larr; 一覧に戻る</a>
+    <div class="pattern-header">
+        <h2>DEV-TM-007: Hollywood Principle 違反（制御の流れの逆転）</h2>
+        <div class="pattern-meta">
+            <span class="badge label-b">B: 誤適用（Misapplication）</span>
+            <span class="type-badge">逸脱タイプ: 協調関係</span>
+            
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">根拠: 3件</span>
+            <span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #d1d5db;">合議: agree</span>
+        </div>
+    </div>
+
+    <table class="pattern-table-2col">
+        <tr><th>逸脱パターン名</th><td><strong>Hollywood Principle 違反（制御の流れの逆転）</strong></td></tr>
+        <tr><th>対象デザインパターン</th><td>Template Method</td></tr>
+        <tr><th>逸脱タイプ</th><td><span class="type-badge">協調関係</span></td></tr>
+        <tr><th>A/B/C 判定</th><td><span class="badge label-b">B: 誤適用（Misapplication）</span></td></tr>
+        <tr><th>一般形式</th><td>Template Method が実現すべき Hollywood Principle（高レベルが低レベルを呼ぶ）が逆転し、サブクラスまたは低レベルコンポーネントが高レベルコンポーネントを直接制御する</td></tr>
+        <tr><th>症状と結果</th><td>Template Method パターン導入後も、サブクラスが親クラスのメソッドを直接呼び出す構造が残る。フレームワーク（高レベル）とアプリケーション（低レベル）の依存方向が逆転し、密結合が生じる。制御フローが散在して追跡困難になる。</td></tr>
+        <tr><th>解決策</th><td>TemplateMethod() を AbstractClass 側で完全に制御し、サブクラスは呼ばれる（コールバック的に）だけにする設計を徹底する。</td></tr>
+        <tr><th>防止策</th><td>Template Method 設計時に「誰が誰を呼ぶか」のフロー図を作成し、高レベル→低レベルの方向のみになっているか確認する。</td></tr>
+        <tr><th>逸脱例</th><td>Game フレームワークの AbstractGame.run() がゲームループを制御すべきところ、ConcreteGame が自分で run() を呼び出したり AbstractGame のメソッドを直接呼び出す。</td></tr>
+        <tr><th>関連する逸脱パターン</th><td><div class="related-links"><a href="./DEV-TM-002.html">DEV-TM-002</a>, <a href="./DEV-TM-006.html">DEV-TM-006</a></div></td></tr>
+        <tr><th>備考</th><td>Hollywood Principle は Template Method / IoC の本質。この原則が破られると Template Method の導入意図がなくなる。</td></tr>
+        
+    </table>
+
+    <details open>
+        <summary>出典・根拠 (3件)</summary>
+        <div class="evidence-list">
+            
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-018 (2024)</div>
+            <div class="evidence-snippet">"High-level components should not directly control low-level execution flow"</div>
+            <div class="evidence-meta"><a href="https://dev.to/mcsee/code-smell-271-the-hollywood-principle-3hh7" target="_blank">https://dev.to/mcsee/code-smell-271-the-hollywood-principle-3hh7</a></div>
+            
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-025 (2016)</div>
+            <div class="evidence-snippet">"Don't call us, we'll call you"</div>
+            <div class="evidence-meta"><a href="https://www.oreilly.com/library/view/learning-python-design/9781785888038/ch08s04.html" target="_blank">https://www.oreilly.com/library/view/learning-python-design/9781785888038/ch08s04.html</a></div>
+            <div class="evidence-meta">Locator: Chapter 8, Section 4</div>
+        </div>
+        <div class="evidence-item">
+            <div class="evidence-source">SRC-038 (2023)</div>
+            <div class="evidence-snippet">"child class doesn't call base class, opposite happens"</div>
+            <div class="evidence-meta"><a href="https://giannisakritidis.com/blog/Template-Method-Pattern/" target="_blank">https://giannisakritidis.com/blog/Template-Method-Pattern/</a></div>
+            
+        </div>
+        </div>
+    </details>
+</main>
+<footer>
+    Template Method 逸脱パターン採掘研究 | <a href="../index.html">一覧に戻る</a>
+</footer>
+</body>
+</html>
